@@ -2,7 +2,6 @@
 
 namespace JewelRana\PasswordPolicy\Providers;
 
-use App\Models\User;
 use Illuminate\Support\ServiceProvider;
 use JewelRana\PasswordPolicy\Observers\UserModelObserver;
 
@@ -16,7 +15,9 @@ class PasswordPolicyServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../../config/password-policy.php' =>  config_path('password-policy.php'),
         ], 'config');
-        User::observe(UserModelObserver::class);
+        if(class_exists('App\\Models\\User')) {
+            \App\Models\User::observe(UserModelObserver::class);
+        }
     }
 }
 
