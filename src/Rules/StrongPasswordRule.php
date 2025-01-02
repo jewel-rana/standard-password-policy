@@ -1,5 +1,5 @@
 <?php
-namespace App\Rules;
+namespace JewelRana\PasswordPolicy\Rules;
 
 use Illuminate\Support\Str;
 use Illuminate\Contracts\Validation\Rule;
