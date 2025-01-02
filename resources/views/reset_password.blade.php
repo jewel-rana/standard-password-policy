@@ -23,6 +23,12 @@
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-record color-blue"></i></span>
                                         <input id="old_password" name="old_password" placeholder="Current password" class="form-control" value="{{ old('old_password') }}"  type="password">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                {{-- <span class="fas fa-lock"></span> --}}
+                                                <span toggle="#password-field" class="fa fa-fw fa-eye field_icon toggle-password"></span>
+                                            </div>
+                                        </div>
                                     </div>
                                     @error('old_password') <span style="display: block" class="error invalid-feedback">{{ $message }}</span> @enderror
                                 </div>
@@ -30,6 +36,12 @@
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-record color-blue"></i></span>
                                         <input id="password" name="password" placeholder="Password" class="form-control"  type="password">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                {{-- <span class="fas fa-lock"></span> --}}
+                                                <span toggle="#password-field" class="fa fa-fw fa-eye field_icon toggle-password"></span>
+                                            </div>
+                                        </div>
                                     </div>
                                     @error('password') <span style="display: block" class="error invalid-feedback">{{ $message }}</span> @enderror
                                 </div>
@@ -37,6 +49,12 @@
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-record color-blue"></i></span>
                                         <input id="confirm_password" name="password_confirmation" placeholder="New password" class="form-control"  type="password">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                {{-- <span class="fas fa-lock"></span> --}}
+                                                <span toggle="#password-field" class="fa fa-fw fa-eye field_icon toggle-password"></span>
+                                            </div>
+                                        </div>
                                     </div>
                                     @error('password_confirmation') <span style="display: block" class="error invalid-feedback">{{ $message }}</span> @enderror
                                 </div>
@@ -53,3 +71,13 @@
         </div>
     </div>
 </div>
+<script>
+        $(document).on('click', '.toggle-password', function () {
+
+            $(this).toggleClass("fa-eye fa-eye-slash");
+
+            var input = $(this).parents('.input-group').find('input');
+            input.attr('type') === 'password' ? input.attr('type', 'text') : input.attr('type', 'password')
+        });
+
+    </script>
