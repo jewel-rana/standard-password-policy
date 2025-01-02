@@ -13,7 +13,7 @@ class UserModelObserver {
 
     public function updated(User $user)
     {
-        if(request()->has('password') && request()->routeIs('password-policy.reset')) {
+        if(request()->has('password') && request()->routeIs(['password-policy.reset', 'change-password'])) {
             UserPassword::create(['user_id' => $user->id, 'password' => $user->password]);
         }
     }
