@@ -18,7 +18,7 @@ class PasswordPolicyServiceProvider extends ServiceProvider
         
         // Publish views to the application's views directory
         $this->publishes([
-            __DIR__ . '/../resources/views' => resource_path('views/vendor/password-policy'),
+            __DIR__ . '/../../resources/views' => resource_path('views/vendor/password-policy'),
         ], 'views');
         if(class_exists('App\\Models\\User')) {
             \App\Models\User::observe(UserModelObserver::class);
