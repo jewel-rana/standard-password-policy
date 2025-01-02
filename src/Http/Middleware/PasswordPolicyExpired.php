@@ -18,13 +18,15 @@ class PasswordPolicyExpired
      */
     public function handle(Request $request, Closure $next)
     {
-        $user = $request->user();
-        $lastChanged = UserPassword::where('user_id', $user->id)->latest()->first();
-        $password_changed_at = new Carbon($lastChanged->created_at ?? $user->created_at);
-
-        if (Carbon::now()->diffInDays($password_changed_at) >= (config('password-policy.max_expire_days') ?? 30)) {
-            session()->flash('message', 'Your password has expired. please reset it');
-            return redirect()->route('password-policy.form');
+        if(!$request->routeIs('password-policy.*')) {
+            $user = $request->user();
+            $lastChanged = UserPassword::where('user_id', $user->id)->latest()->first();
+            $password_changed_at = new Carbon($lastChanged->created_at ?? $user->created_at);
+    
+            if (Carbon::now()->diffInDays($password_changed_at) >= (config('password-policy.max_expire_days') ?? 30)) {
+                session()->flash('message', 'Your password has expired. please reset it');
+                return redirect()->route('password-policy.form');
+            }
         }
         return $next($request);
     }
