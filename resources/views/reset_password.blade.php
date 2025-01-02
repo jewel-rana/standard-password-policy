@@ -23,7 +23,7 @@
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-record color-blue"></i></span>
                                         <input id="old_password" name="old_password" placeholder="Current password" class="form-control" value="{{ old('old_password') }}"  type="password">
-                                        <div class="input-group-append">
+                                        <div class="input-group-addon">
                                             <div class="input-group-text">
                                                 {{-- <span class="fas fa-lock"></span> --}}
                                                 <span toggle="#password-field" class="fa fa-fw fa-eye field_icon toggle-password"></span>
@@ -36,7 +36,7 @@
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-record color-blue"></i></span>
                                         <input id="password" name="password" placeholder="Password" class="form-control"  type="password">
-                                        <div class="input-group-append">
+                                        <div class="input-group-addon">
                                             <div class="input-group-text">
                                                 {{-- <span class="fas fa-lock"></span> --}}
                                                 <span toggle="#password-field" class="fa fa-fw fa-eye field_icon toggle-password"></span>
