@@ -8,7 +8,13 @@ use JewelRana\PasswordPolicy\Models\UserPassword;
 
 class PreviousPasswordPolicyRule implements Rule
 {
+    protected ?int $userId;
 
+    public function __construct($userId = null)
+    {
+        $this->userId = $userId;
+    }
+    
     /**
      * Determine if the validation rule passes.
      *
@@ -18,7 +24,7 @@ class PreviousPasswordPolicyRule implements Rule
      */
     public function passes($attribute, $value): bool
     {
-        $previousPasswords = UserPassword::where('user_id', auth()->user()->id)->latest()->get();
+        $previousPasswords = UserPassword::where('user_id', $this->userId ?? auth()->user()->id)->latest()->get();
         return  $previousPasswords->filter(function($item, $key) use($value) {
             return Hash::check($value, $item->password, []);
         })->count() === 0;
