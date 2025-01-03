@@ -38,6 +38,7 @@ class OldPasswordPolicyRule implements Rule
                 $this->failedAttempt(request(), auth()->user()->email);
                 return false;
             }
+            return true;
         } catch(\Exception $exception) {
             Log::error($exception->getMessage());
             $this->message = __('Internal server error');
