@@ -18,7 +18,7 @@ class PasswordPolicyExpired
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!$request->routeIs(['dashboard/logout', 'logout', 'password-policy.*']) && auth()->check()) {
+        if(!in_array(request()->route()->uri(), ['dashboard/logout', 'logout']) && !$request->routeIs('password-policy.*') && auth()->check()) {
             $user = $request->user();
             $lastChanged = UserPassword::where('user_id', $user->id)->latest()->first();
             $password_changed_at = new Carbon($lastChanged->created_at ?? $user->created_at);
