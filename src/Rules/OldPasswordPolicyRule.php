@@ -15,6 +15,7 @@ class OldPasswordPolicyRule implements Rule
     public function __construct()
     {
         $this->message = __('Your old password does not match');
+    }
     
     /**
      * Determine if the validation rule passes.
