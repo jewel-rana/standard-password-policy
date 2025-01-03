@@ -18,7 +18,7 @@ class ResetPasswordController extends Controller
     }
     public function resetForm(): View
     {
-        return view('password-policy::reset_password');
+        return view('password-policy::reset_password')->with(['title' => 'Reset Password']);
     }
 
     public function resetPassword(ResetPasswordRequest $request): RedirectResponse
