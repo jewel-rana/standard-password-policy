@@ -5,6 +5,7 @@ namespace JewelRana\PasswordPolicy\Rules;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 use App\Traits\EnsureSecurityTrait;
+use Illuminate\Support\Facades\Log;
 
 class OldPasswordPolicyRule implements Rule
 {
