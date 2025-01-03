@@ -28,7 +28,7 @@ class OldPasswordPolicyRule implements Rule
     {
         try{
             if($this->hasAlreadyBlocked($value)) {
-                $this->message = __('The :attribute has blocked due to multiple failed attempts, ['attribute' => 'email']);
+                $this->message = __('Your account has blocked due to multiple failed attempts.');
                 auth()->logout();
                 session()->flush();
                 return false;
