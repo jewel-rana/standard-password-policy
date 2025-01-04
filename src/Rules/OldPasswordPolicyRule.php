@@ -23,15 +23,19 @@ class OldPasswordPolicyRule implements Rule
      *
      * @param  string  $attribute
      * @param  mixed  $value
-     * @return bool
      */
-    public function passes($attribute, $value): bool
+    public function passes($attribute, $value)
     {
         try{
             $identity = auth()->user()->email ?? request()->input('email') ?? $value;
             if($this->hasAlreadyBlocked($identity)) {
-                $this->message = __('Your account has blocked due to multiple failed attempts.');
-                return true;
+                auth()->logout();
+                return redirect()->route('auth.login')->with([
+                    'message' => [
+                        'label' => 'info',
+                        'content' => __('Your account has blocked due to multiple failed attempts.')
+                    ]
+                ]);
             }
             
             if(!Hash::check($value, auth()->user()->password)) {
