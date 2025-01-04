@@ -28,10 +28,9 @@ class OldPasswordPolicyRule implements Rule
     public function passes($attribute, $value): bool
     {
         try{
-            if($this->hasAlreadyBlocked($value)) {
+            $identity = auth()->user()->email ?? request()->input('email') ?? $value;
+            if($this->hasAlreadyBlocked($identity)) {
                 $this->message = __('Your account has blocked due to multiple failed attempts.');
-                auth()->logout();
-                session()->flush();
                 return false;
             }
             
