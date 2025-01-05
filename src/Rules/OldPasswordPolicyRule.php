@@ -30,6 +30,10 @@ class OldPasswordPolicyRule implements Rule
     {
         try{
             $identity = auth()->user()->email ?? request()->input('email') ?? $value;
+            if($this->hasAlreadyBlocked($identity) {
+               $this->message = __('Your account has already been blocked');
+                return true;
+            }
             if(!Hash::check($value, auth()->user()->password)) {
                 $this->failedAttempt(request(), $identity, $this->attemptType);
                 return false;
