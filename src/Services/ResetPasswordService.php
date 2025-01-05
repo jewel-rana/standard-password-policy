@@ -12,7 +12,7 @@ class ResetPasswordService
     
     public function resetPassword(array $data)
     {
-        $user = User::first();
+        $user = Auth::user();
         if($this->hasAlreadyBlocked($user->email)) {
                 auth()->logout();
                 return redirect()->route('auth.login')->with([
