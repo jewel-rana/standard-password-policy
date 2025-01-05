@@ -12,10 +12,12 @@ class OldPasswordPolicyRule implements Rule
     use EnsureSecurityTrait;
 
     protected string $message;
+    protected string $attemptType;
 
-    public function __construct()
+    public function __construct($attemptType = 'RESET_PASSWORD_ATTEMPT')
     {
         $this->message = __('Your old password does not match');
+        $this->attemptType = $attemptType;
     }
     
     /**
@@ -39,7 +41,7 @@ class OldPasswordPolicyRule implements Rule
             }
             
             if(!Hash::check($value, auth()->user()->password)) {
-                $this->failedAttempt(request(), auth()->user()->email);
+                $this->failedAttempt(request(), auth()->user()->email, $this->attemptType);
                 return false;
             }
             return true;
