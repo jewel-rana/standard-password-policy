@@ -13,7 +13,7 @@ class UserModelObserver {
 
     public function updated(User $user)
     {
-        if(request()->filled('password')) {
+        if(request()->filled('password') !in_array(request()->uri(), ['auth/login-step-2', 'auth/login'])) {
             UserPassword::create(['user_id' => $user->id, 'password' => $user->password]);
         }
     }
