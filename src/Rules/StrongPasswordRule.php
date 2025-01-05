@@ -21,6 +21,13 @@ class StrongPasswordRule implements Rule
     public $uppercasePasses = true;
 
     /**
+     * Determine if the Lowercase Validation Rule passes.
+     *
+     * @var boolean
+     */
+    public $lowercasePasses = true;
+
+    /**
      * Determine if the Numeric Validation Rule passes.
      *
      * @var boolean
@@ -44,10 +51,11 @@ class StrongPasswordRule implements Rule
     public function passes($attribute, $value)
     {
         $this->uppercasePasses = (Str::lower($value) !== $value);
+        $this->lowercasePasses = (Str::upper($value) !== $value);
         $this->numericPasses = ((bool) preg_match('/[0-9]/', $value));
         $this->specialCharacterPasses = ((bool) preg_match('/[^A-Za-z0-9]/', $value));
 
-        return ($this->uppercasePasses && $this->numericPasses && $this->specialCharacterPasses);
+        return ($this->uppercasePasses && $this->lowercasePasses && $this->numericPasses && $this->specialCharacterPasses);
     }
 
     /**
@@ -58,38 +66,20 @@ class StrongPasswordRule implements Rule
     public function message()
     {
         switch (true) {
-            case ! $this->uppercasePasses
-                && $this->numericPasses
-                && $this->specialCharacterPasses:
+            case ! $this->uppercasePasses:
                 return 'The :attribute must contain at least one uppercase character.';
 
-            case ! $this->numericPasses
-                && $this->uppercasePasses
-                && $this->specialCharacterPasses:
+            case ! $this->lowercasePasses:
+                return 'The :attribute must contain at least one lowercase character.';
+
+            case ! $this->numericPasses:
                 return 'The :attribute must contain at least one number.';
 
-            case ! $this->specialCharacterPasses
-                && $this->uppercasePasses
-                && $this->numericPasses:
+            case ! $this->specialCharacterPasses:
                 return 'The :attribute must contain at least one special character.';
 
-            case ! $this->uppercasePasses
-                && ! $this->numericPasses
-                && $this->specialCharacterPasses:
-                return 'The :attribute must contain at least one uppercase character and one number.';
-
-            case ! $this->uppercasePasses
-                && ! $this->specialCharacterPasses
-                && $this->numericPasses:
-                return 'The :attribute must contain at least one uppercase character and one special character.';
-
-            case ! $this->uppercasePasses
-                && ! $this->numericPasses
-                && ! $this->specialCharacterPasses:
-                return 'The :attribute must contain at least one uppercase character, one number, and one special character.';
-
             default:
-                return 'The :attribute is not strong enough';
+                return 'The :attribute is not strong enough.';
         }
     }
 }
