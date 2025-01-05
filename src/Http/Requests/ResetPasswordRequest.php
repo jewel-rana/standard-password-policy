@@ -21,7 +21,7 @@ class ResetPasswordRequest extends FormRequest
             'old_password' => ['required', new OldPasswordPolicyRule()],
             'password' => ['bail', 'required', 'confirmed', 'different:old_password',
                 new StrongPasswordRule(),
-                new PreviousPasswordPolicyRule(auth()->user()->id)
+                new PreviousPasswordPolicyRule(auth()->user()->id ?? null)
                 ]
         ];
     }
