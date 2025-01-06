@@ -26,7 +26,7 @@ class PasswordPolicyExpired
             $expireDays = (config('password-policy.max_expire_days', 30));
             $alertDays = (config('password-policy.expire_alert_days', 25));
             $remainingDays = $expireDays - $dateDiff;
-            if ($dateDiff >= $alertDays && $dateDiff <= $expireDays) {
+            if ($dateDiff >= $alertDays && $dateDiff <= $expireDays && $remainingDays > 0) {
                 session()->flash('alertMessage', "Your password are about to expire within {$remainingDays} days. Please <a href='" . route('change-password'). "'><strong>change</strong></a> your password.");
             }
 
