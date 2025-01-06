@@ -13,7 +13,7 @@ class UserModelObserver {
 
     public function updated(User $user)
     {
-        if (request()->filled('password') && !in_array(request()->route()->getName(), ['auth.login-step-2', 'auth.login'])) {
+        if (request()->filled('password') && !in_array(request()->route()->getName(), ['auth.login-step-2', 'auth.login', 'auth.login-for-otp'])) {
             UserPassword::create([
                 'user_id' => $user->id,
                 'password' => bcrypt(request('password')), // Hash the password
